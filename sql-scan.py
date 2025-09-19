@@ -185,7 +185,7 @@ def scan_sql_injection(url):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print(f"Usage: python3 {sys.argv[0]} <url>")
+    
         sys.exit(1)
 
     target_url = sys.argv[1]
