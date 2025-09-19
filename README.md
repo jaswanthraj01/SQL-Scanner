@@ -22,6 +22,8 @@ Make sure you have **Python 3** installed. Then install the dependencies:
 python3 -m venv venv
 source venv/bin/activate
 pip install requests beautifulsoup4
+pip install pyfiglet
+
 
 usage:-
 python3 sql-scan.py "https://testphp.vulnweb.com/artists.php?artist=1"
