@@ -1,6 +1,16 @@
 import pyfiglet
 import datetime
 
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print(f"Usage: python3 {sys.argv[0]} <url>")
+    
+        sys.exit(1)
+
+    target_url = sys.argv[1]
+    scan_sql_injection(target_url)
+
 def print_header():
     # ASCII banner
     ascii_banner = pyfiglet.figlet_format("SQL Injection Scanner")
@@ -185,6 +195,7 @@ def scan_sql_injection(url):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
+        print(f"Usage: python3 {sys.argv[0]} <url>")
     
         sys.exit(1)
 
