@@ -1,3 +1,23 @@
+import pyfiglet
+import datetime
+
+def print_header():
+    # ASCII banner
+    ascii_banner = pyfiglet.figlet_format("SQL Injection Scanner")
+    print(ascii_banner)
+    
+    # Extra info under the banner
+    print("=" * 60)
+    print(" Author    : Jaswanth")
+    print(" Tool      : SQL Injection Scanner")
+    print(" Date/Time : ",("2025-10-19 12:15:20"))
+    print("=" * 60)
+    print("\n")
+
+if __name__ == "__main__":
+    print_header()
+    # your scanner code (like running sqlmap or custom logic) goes here
+
 #!/usr/bin/env python3
 """
 Simple SQL Injection Scanner
